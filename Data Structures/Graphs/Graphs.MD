@@ -36,11 +36,11 @@ Graph → It is a network of nodes (vertices) connected by edges.
         Most space-efficient representation
         Store vertices as index and their neighbor details as values
         Structure: vertex → [neighbor1, neighbor2, ...]
-        ```bash
+    
         Example:
         0 → [1, 2]
         1 → [0, 3] 
         2 → [0, 4]
         3 → [1]
         4 → [2]
-        ```
+        
