@@ -35,3 +35,28 @@ dfs(v, vis)
 }
 ```
 Note: For any disconnected graph, check the vertices length and then call the nexessary traversal algorithm
+
+#### Cycle Detection
+    - Exists both in directed and undirected graphs
+    - In Undirected Graphs, We can use DFS, BFS and Disjoint Set Union to detect cycles.
+    - In Directed Graphs, We can use DFS, BFS and Kahn;s Algorithm to detect cycles.
+    - Usage of DFS because its simpler
+    - Back Edge case: Where `u` connects to ancestor `v` which detects a cycle or loop.
+
+#### Cycle Detection using DFS
+```bash
+bool dfs(src, visit[], par) {
+visit[src] = true;
+for (v:l[u]) {
+if (!visit[v]) {
+if (dfs(v, visit)) {
+return true
+}
+}
+else if (v!=par){
+return true
+}
+}
+return false
+}
+```
