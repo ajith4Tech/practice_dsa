@@ -21,13 +21,36 @@ class Graph:
                 return True
         return False
     
-    def is_cycle(self):
+    def is_cycle_dfs(self):
         visited = [False] * self.V
         for i in range(self.V):
             if not visited[i]:
                 if self.is_cycle_undir_dfs(i, -1, visited):
                     return True
         return False
+    
+    def is_cycle_bfs(self):
+        visited = [False] * self.V
+        for i in range(self.V):
+            if not visited[i]:
+                if self.is_cycle_undir_bfs(i, visited):
+                    return True
+        return False
+    
+    def is_cycle_undir_bfs(self, src, visited):
+        Queue = []
+        Queue.append((src, -1))
+        visited[src] = True
+        while Queue:
+            u, par = Queue.pop()
+            for v in self.l[u]:
+                if not visited[v]:
+                    Queue.append((v, u))
+                    visited[v]=True
+                elif par != v:
+                    return True
+        return False
+        
     
 # Run the code            
 if __name__ == "__main__":
@@ -37,5 +60,7 @@ if __name__ == "__main__":
     g.add_edge(0, 3)
     g.add_edge(1, 2)
     g.add_edge(3, 4)
-    print(g.is_cycle())
+    print(g.is_cycle_dfs())
+    print(g.is_cycle_bfs())
+    
     

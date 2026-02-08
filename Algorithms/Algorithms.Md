@@ -60,3 +60,24 @@ return true
 return false
 }
 ```
+
+#### Cycle Detection using BFS
+```bash
+bfs(src, visit[]) {
+queue Q[][]
+Q.push(src, -1)
+visit[src] = true
+while Q.size > 0 {
+u, par = Q.pop()
+for v:l[u]{
+if(!visit[v){
+Q.push(v)
+vis[v] = true
+}
+else if(v!=par){
+return true
+}
+return false
+}
+}
+```
