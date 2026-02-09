@@ -45,7 +45,7 @@ Note: For any disconnected graph, check the vertices length and then call the ne
 
 #### Cycle Detection using DFS
 ```bash
-bool dfs(src, visit[], par) {
+dfs(src, visit[], par) {
 visit[src] = true;
 for (v:l[u]) {
 if (!visit[v]) {
@@ -70,7 +70,7 @@ visit[src] = true
 while Q.size > 0 {
 u, par = Q.pop()
 for v:l[u]{
-if(!visit[v){
+if(!visit[v]){
 Q.push(v)
 vis[v] = true
 }
