@@ -43,4 +43,3 @@ Graph → It is a network of nodes (vertices) connected by edges.
         2 → [0, 4]
         3 → [1]
         4 → [2]
-        
