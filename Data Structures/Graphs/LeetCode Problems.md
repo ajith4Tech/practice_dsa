@@ -36,6 +36,49 @@ bfs(i, j, visited[][], grid[][]){
                 grid[nx][ny] = '0'
                 queue.append((nx, ny))
 }
-`````
+```
+Time Complexity: O(nm)
+Space Complexity: O(nm)
+
+#### Rotten Oranges
+If a cell contains 0, then its an empty cell, if it contains 1, its a fresh cell and if it contains 2, its a rotten cell.
+If a rotten orange shares an edge with fresh orange, the fresh oranges become rotten. the idea is to calculate time period for making each fresh orange rotten.
+If an orange stays fresh after all the iterations, then the total time period is -1 and if there are no fresh oranges, then the time period is 0.
+
+Step1: Start with the node with value 2, check its edges. possible edges will be up, down, left and right
+Step2: if edge contains 1, make it rot and check its neighbours, if neighbors contain 1, make it rotten.
+Step3: until possible edges are 0 or all the edges visited, continue the loop
+Step4: add time for each node or traversal
+
+Edge case: there can also be multiple rotten oranges. so the time will change based on the multiple sources. if multiple sources are used. 
+Intution, if graph is disconnected, then it will always return -1 because one or more orranges remain fresh.
+looks like bfs traversal but there need to be multiple source to start with, since starting point can be taken from any where. and less recursion is better
+
+if using multi-source bfs:
+```bash
+queue = deque([(i,j,0)])
+
+for i in range(n):
+    for j in range(m):
+        if grid[i][j]==2:
+            q.append((i,j))
+
+while queue:
+    i,j, time = queue.popleft()
+    ans = max(ans, time)
+    
+    if i-1>=0 and not visited[i-1][j] and grid[i-1][j]==1:
+        queue.append((i-1, j, time+1))
+        visited[i-1][j] = True
+    if i+1<n and not visited[i+1][j] and grid[i+1][j]==1:
+        queue.append((i+1, j, time+1))
+        visited[i+1][j] = True
+    if j-1>=0 and not visited[i][j-1] and grid[i][j-1]==1:
+        queue.append((i, j-1, time+1))
+        visited[i][j-1] = True
+    if j+1<m and not visited[i][j+1] and grid[i][j+1]==1:
+        queue.append((i, j+1, time+1))
+        visited[i][j+1] = True
+```
 Time Complexity: O(nm)
 Space Complexity: O(nm)
