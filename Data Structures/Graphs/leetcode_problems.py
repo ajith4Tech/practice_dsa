@@ -164,13 +164,13 @@ class Graph:
     def buildGraph(self, adjList):
         if not adjList: return None
         n = len(adjList)
-        nodes = {i: Node(i) for i in range(n)}
-        for i in range(n):
-            for j in adjList[i]:
-                if j<n:
+        # Adjust nodes to be 1-indexed
+        nodes = {i: Node(i) for i in range(1, n + 1)}
+        for i in range(1, n + 1):
+            for j in adjList[i - 1]:  # Adjust for 1-indexed input
+                if j <= n:
                     nodes[i].neighbors.append(nodes[j])
-        return nodes[0]
-    
+        return nodes[1]  # Return the node with value 1
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node: return None
         visited = {}
@@ -214,6 +214,6 @@ if __name__ == "__main__":
     
     #print(g.orangesRotting(grid))
     g.printGraph(clone)
-    
+
 
 
