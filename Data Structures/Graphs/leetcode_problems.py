@@ -24,11 +24,13 @@ Input: grid = [
 Output: 3
 
 '''
-from typing import List
+from typing import List, Optional
 from collections import deque
+
 
 class Graph:
     def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]: return 0
         islands = 0
         visited = [[False for _ in range(len(grid[0]))] for _ in range(len(grid))]
         m, n = len(grid), len(grid[0])
@@ -138,8 +140,80 @@ class Graph:
                 if grid[i][j] == 1 and not visited[i][j]:
                     return -1
         return ans
+    '''
+    Given a reference of a node in a connected undirected graph.
+
+    Return a deep copy (clone) of the graph.
+
+    Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors.
+
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+    }
+
+ 
+    Test case format:
+
+    For simplicity, each node's value is the same as the node's index (1-indexed). For example, the first node with val == 1, the second node with val == 2, and so on. The graph is represented in the test case using an adjacency list.
+
+    An adjacency list is a collection of unordered lists used to represent a finite graph. Each list describes the set of neighbors of a node in the graph.
+
+    The given node will always be the first node with val = 1. You must return the copy of the given node as a reference to the cloned graph.
+    '''
+    def buildGraph(self, adjList):
+        if not adjList: return None
+        n = len(adjList)
+        nodes = {i: Node(i) for i in range(n)}
+        for i in range(n):
+            for j in adjList[i]:
+                if j<n:
+                    nodes[i].neighbors.append(nodes[j])
+        return nodes[0]
+    
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node: return None
+        visited = {}
+        def dfs(current_node):
+            if current_node is None:
+                return None
+            if current_node in visited:
+                return visited[current_node]
+            
+            cloned_node = Node(current_node.val)
+            visited[current_node] = cloned_node
+            
+            for neighbor in current_node.neighbors:
+                cloned_node.neighbors.append(dfs(neighbor))
+            return cloned_node
+        return dfs(node)
+        
+    def printGraph(self, node):
+        if not node: return
+        visited = set()
+        def dfs(current_node):
+            if current_node in visited:
+                return
+            visited.add(current_node)
+            print(f"Node: {current_node.val}, Neighbors: {[neighbor.val for neighbor in current_node.neighbors]}")
+            for neighbor in current_node.neighbors:
+                dfs(neighbor)
+        dfs(node)
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors else []
+
 
 if __name__ == "__main__":
     grid = [[2,1,1],[1,1,0],[2,1,1]]
+    adjList = [[2,4],[1,3],[2,4],[1,3]]
     g = Graph()
-    print(g.orangesRotting(grid))
+    root = g.buildGraph(adjList)
+    clone = g.cloneGraph(root)
+    
+    #print(g.orangesRotting(grid))
+    g.printGraph(clone)
+    
+
+

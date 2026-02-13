@@ -82,3 +82,30 @@ while queue:
 ```
 Time Complexity: O(nm)
 Space Complexity: O(nm)
+
+#### Clone Graph - Leetcode 133
+We need to clone the graph, without actually returning the same graph. It needs to be a deep copy. it cannot be a simple or shallow copy of a graph.
+When we try to copy a from original graph, we will encounter 2 issues:
+1. Infinite Loop : A -> B and B -> A, then again A -> B and B -> A
+2. Maintaining correct references: cloned nodes need to be pointing to other cloned nodes not the original nodes.
+
+Solution:
+using dfs with hash table.
+```bash
+dfs(current_node)
+if current_node is None:
+    return None
+if current_node in visited_to_cloned:
+    return visited_to_cloned[current_node]
+
+cloned_node = Node(current_node.val)
+
+visited_to_cloned[current_node] = cloned_node
+
+for neighbor in current_node.neighbors:
+    cloned_node.neighbors.append(dfs(neighbor))
+
+return cloned_node
+```
+Time Complexity: O(n)
+Space Complexity: O(n)
