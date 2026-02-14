@@ -82,3 +82,4 @@ return false
 }
 ```
 
+#### Union-Find Algorithm or Disjoint Set Union

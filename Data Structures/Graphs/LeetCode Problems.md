@@ -109,3 +109,29 @@ return cloned_node
 ```
 Time Complexity: O(n)
 Space Complexity: O(n)
+
+#### Leetcode 684: Redundant Connection
+Given Edges, Find redundant
+Step1: Tree rule? (N-1 edges = no cycle)
+Step2: N edges = 1 cycle
+Step3: Process Sequentially -> last cycle = answer
+Step4: Cycle check per edge -> Union Find Algorithm
+```bash
+DSU(N):
+    parent = [i for i in range(N)]
+
+FIND(x):
+    if parent[x] != x:
+        parent[x] = FIND(parent[x])
+    return parent[x]
+
+ADD_EDGE(u, v):
+    pu = FIND(u-1)
+    pv = FIND(v-1)
+    if pu == pv:
+        return [u, v]  # Cycle detected!
+    parent[pu] = pv
+    return None
+```
+Time Complexity: O(n)
+Space Complexity: O(n)

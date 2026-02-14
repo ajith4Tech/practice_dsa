@@ -199,10 +199,29 @@ class Graph:
             for neighbor in current_node.neighbors:
                 dfs(neighbor)
         dfs(node)
+
+    def findRedundantConnection(self, edges: List[list[int]]) -> List[int]:
+        def find(node: int) -> int:
+            if parent[node] != node:
+                parent[node] = find(parent[node])
+            return parent[node]
+        parent = list(range(len(edges)))
+        for node1, node2 in edges:
+            parent1 = find(node1 - 1)
+            parent2 = find(node2 - 1)
+            if parent1 == parent2:
+                return [node1, node2]
+            parent[parent1] = parent2
+        return []
+
+
 class Node:
     def __init__(self, val=0, neighbors=None):
         self.val = val
         self.neighbors = neighbors if neighbors else []
+
+
+
 
 
 if __name__ == "__main__":
@@ -211,9 +230,10 @@ if __name__ == "__main__":
     g = Graph()
     root = g.buildGraph(adjList)
     clone = g.cloneGraph(root)
-    
+    edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]
+    print(g.findRedundantConnection(edges))
     #print(g.orangesRotting(grid))
-    g.printGraph(clone)
+    #g.printGraph(clone)
 
 
 
